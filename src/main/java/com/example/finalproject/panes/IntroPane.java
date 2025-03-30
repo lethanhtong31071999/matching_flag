@@ -1,24 +1,27 @@
 package com.example.finalproject.panes;
 
 import com.example.finalproject.Const;
+import com.example.finalproject.SoundManager;
 import com.example.finalproject.components.Type;
 import com.example.finalproject.components.buttons.ButtonBase;
 import com.example.finalproject.components.texts.HeadingText;
 import com.example.finalproject.scenes.CreditScene;
 import com.example.finalproject.scenes.PlayingScene;
+import com.example.finalproject.scenes.SettingScene;
 import javafx.animation.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
-import static com.example.finalproject.MainApplication.main;
 import static com.example.finalproject.MainApplication.mainStage;
 
 public class IntroPane extends VBox {
@@ -42,34 +45,47 @@ public class IntroPane extends VBox {
         logo.setClip(clip);
         VBox.setMargin(logo, new Insets(20, 0, 0, 0));
 
-        // Play Button
-        ButtonBase btnNewGame = new ButtonBase("New Game", Type.PRIMARY);
-        VBox.setMargin(btnNewGame, new Insets(20, 0, 0, 0));
-        btnNewGame.setOnAction(e -> {
-            mainStage.setScene(new PlayingScene());
+        // Continue Button
+        ButtonBase btnContinue = new ButtonBase("Continue Game", Type.TEXT_BUTTON);
+        btnContinue.setTextFill(Const.PRIMARY_COLOR);
+        Font currentFont = btnContinue.getFont();
+        btnContinue.setFont(Font.font(currentFont.getFamily(), FontWeight.BOLD, FontPosture.ITALIC, currentFont.getSize()));
+        VBox.setMargin(btnContinue, new Insets(10, 0, 0, 0));
+        btnContinue.setOnAction(e->{
+            SoundManager.playButtonClickSound();
+            mainStage.setScene(Const.playingScene);
         });
 
         // Scale continue
-        ScaleTransition scalePlayBtn = new ScaleTransition(Duration.seconds(1.5), btnNewGame);
-        scalePlayBtn.setFromX(1);
-        scalePlayBtn.setFromY(1);
-        scalePlayBtn.setToX(1.1);
-        scalePlayBtn.setToY(1.1);
-        scalePlayBtn.setCycleCount(Animation.INDEFINITE);
-        scalePlayBtn.setInterpolator(Interpolator.LINEAR);
-        scalePlayBtn.setAutoReverse(true);
-        scalePlayBtn.play();
+        ScaleTransition scaleContinueBtn = new ScaleTransition(Duration.seconds(1.5), btnContinue);
+        scaleContinueBtn.setFromX(1);
+        scaleContinueBtn.setFromY(1);
+        scaleContinueBtn.setToX(1.1);
+        scaleContinueBtn.setToY(1.1);
+        scaleContinueBtn.setCycleCount(Animation.INDEFINITE);
+        scaleContinueBtn.setInterpolator(Interpolator.LINEAR);
+        scaleContinueBtn.setAutoReverse(true);
+        scaleContinueBtn.play();
+        if(1 == 0) {
+            // If not exist any previous game
+            btnContinue.setVisible(false);
+        }
 
         // Settings
         ButtonBase btnSetting = new ButtonBase("Settings", Type.TEXT_BUTTON);
         btnSetting.setOpacity(0);
         VBox.setMargin(btnSetting, new Insets(10, 0, 0, 0));
+        btnSetting.setOnAction(e->{
+            mainStage.setScene(Const.settingScene);
+            SoundManager.playButtonClickSound();
+        });
 
         // Credit
         ButtonBase btnCredit = new ButtonBase("Credit", Type.TEXT_BUTTON);
         btnCredit.setOpacity(0);
         btnCredit.setOnAction(e -> {
             mainStage.setScene(new CreditScene());
+            SoundManager.playButtonClickSound();
         });
 
         // History
@@ -77,8 +93,18 @@ public class IntroPane extends VBox {
         btnHistory.setOpacity(0);
         VBox.setMargin(btnHistory, new Insets(10, 0, 0, 0));
 
+        // Play Button
+        ButtonBase btnNewGame = new ButtonBase("New Game", Type.PRIMARY);
+        btnNewGame.setTranslateY(200);
+        btnNewGame.setOpacity(0);
+        VBox.setMargin(btnNewGame, new Insets(20, 0, 0, 0));
+        btnNewGame.setOnAction(e -> {
+            mainStage.setScene(new PlayingScene(new PlayingPane()));
+            SoundManager.playButtonClickSound();
+        });
+
         this.setAlignment(Pos.BASELINE_CENTER);
-        this.getChildren().addAll(title, logo, btnNewGame, btnSetting, btnCredit, btnHistory);
+        this.getChildren().addAll(title, logo, btnContinue, btnSetting, btnCredit, btnHistory, btnNewGame);
 
         /* ======== END UI ======== */
 
@@ -117,10 +143,23 @@ public class IntroPane extends VBox {
         fadeHistory.setToValue(1);
         fadeHistory.setFromValue(0);
 
+        // Transition Y New game Button + Fade (Parallel)
+        TranslateTransition slideButton = new TranslateTransition(Duration.seconds(1.5), btnNewGame);
+        slideButton.setToY(100);
+        slideButton.setInterpolator(Interpolator.LINEAR);
+        FadeTransition fadeButton = new FadeTransition(Duration.seconds(1.5), btnNewGame);
+        fadeButton.setToValue(1);
+        ParallelTransition parallelButton = new ParallelTransition(slideButton, fadeButton);
+
         // Others Transition X (Sequential)
         SequentialTransition sequentialSettingCreditHistory = new SequentialTransition(
                 fadeSetting, fadeCredit, fadeHistory);
-        sequentialSettingCreditHistory.play();
+
+        // Sequential Transition: Other + New game button
+        SequentialTransition sequentialTransition = new SequentialTransition(
+                sequentialSettingCreditHistory, parallelButton
+        );
+        sequentialTransition.play();
         /* ======== END ANIMATION ======== */
     }
 }

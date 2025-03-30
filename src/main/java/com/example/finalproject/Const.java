@@ -1,10 +1,18 @@
 package com.example.finalproject;
 
-import javafx.geometry.Rectangle2D;
+import com.example.finalproject.panes.IntroPane;
+import com.example.finalproject.panes.PausePane;
+import com.example.finalproject.panes.PlayingPane;
+import com.example.finalproject.panes.SettingPane;
+import com.example.finalproject.scenes.IntroScene;
+import com.example.finalproject.scenes.PauseScene;
+import com.example.finalproject.scenes.PlayingScene;
+import com.example.finalproject.scenes.SettingScene;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Screen;
 
 public final class Const {
     // Clip logo
@@ -48,6 +56,28 @@ public final class Const {
     public static final int SIZE_4 = 4;
     public static final int CELL_WIDTH = 100;
     public static final int CELL_HEIGHT = 100;
-
     public static final int CELL_GAP = 10;
+
+    // Music and background
+    public static MediaPlayer mediaPlayer;
+    public static Media media;
+    public static boolean isMusicPlaying = true;
+
+    public static Media backgroundMedia;
+    public static MediaPlayer backgroundMediaPlayer;
+    public static boolean isBackgroundSoundOn = true;
+
+
+    // Constant Panes
+    public static IntroPane introPane;
+    public static PlayingPane playingPane;
+    public static SettingPane settingPane;
+    public static PausePane pausePane;
+
+    // Constant Scenes
+    public static IntroScene introScene;
+    public static PlayingScene playingScene;
+    public static SettingScene settingScene;
+    public static PauseScene pauseScene;
+
 }

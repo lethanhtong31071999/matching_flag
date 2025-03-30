@@ -10,7 +10,7 @@ import javafx.util.Duration;
 
 public class FlagItem extends Button {
     private FlagContainer parentContainer;
-    private final String placeholderImg = "https://i.redd.it/et43sartp1671.png";
+    private final String placeholderImg = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Flag_of_Portugal_%28alternate%29.svg/1024px-Flag_of_Portugal_%28alternate%29.svg.png";
     private String imageUrl;
     private  String flagName;
     private boolean isOpening;
