@@ -46,7 +46,7 @@ public class PausePane extends BorderPane {
                     Const.isMusicPlaying = true;
                 }
             }
-            Const.backgroundMediaPlayer.play();
+            SoundManager.playButtonClickSound();
         });
 
         background.setOnAction(e -> {
