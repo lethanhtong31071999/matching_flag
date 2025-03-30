@@ -7,33 +7,34 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import java.io.InputStream;
 
 public class FlagItem extends Button {
     private FlagContainer parentContainer;
-    private final String placeholderImg = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Flag_of_Portugal_%28alternate%29.svg/1024px-Flag_of_Portugal_%28alternate%29.svg.png";
-    private String imageUrl;
-    private  String flagName;
+    private final String placeholderImgPath = "/com/example/finalproject/placeholder.png";
+    private String imagePath;
+    private String flagName;
     private boolean isOpening;
-    private boolean isMatch; // if match = true -> this item removed
+    private boolean isMatch;
 
-    public FlagItem (String flagName, String imgUrl, FlagContainer parentContainer) {
+    public FlagItem(String flagName, String imagePath, FlagContainer parentContainer) {
         super(" ");
         this.parentContainer = parentContainer;
         this.flagName = flagName;
-        this.imageUrl = imgUrl;
+        this.imagePath = imagePath;
         this.isOpening = false;
         this.isMatch = false;
         this.setOpacity(1);
 
         this.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        this.setBackgroundFlagItem(this.placeholderImg);
-        this.setOnAction(e -> handleClick(e));
+        this.setBackgroundFlagItem(placeholderImgPath);
+        this.setOnAction(this::handleClick);
     }
 
     private void handleClick(ActionEvent e) {
         flagItemAnimation();
         this.isOpening = true;
-        this.setBackgroundFlagItem(this.imageUrl);
+        this.setBackgroundFlagItem(imagePath);
         parentContainer.handleFlagClick(this);
     }
 
@@ -46,26 +47,28 @@ public class FlagItem extends Button {
         fade.play();
     }
 
-    // For parent call after matching incorrect
     public void reset() {
         this.isOpening = false;
-        this.setBackgroundFlagItem(this.placeholderImg);
+        this.setBackgroundFlagItem(placeholderImgPath);
     }
 
-    private void setBackgroundFlagItem(String imageUrl) {
-        BackgroundImage backgroundImage = new BackgroundImage(
-//                MainApplication.imageList.get(0),
-                new Image(imageUrl, true),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(100, 100, true, true, true, false)
-        );
-        this.setBackground(new Background(backgroundImage));
+    private void setBackgroundFlagItem(String imagePath) {
+        InputStream stream = getClass().getResourceAsStream(imagePath);
+        if (stream != null) {
+            Image image = new Image(stream);
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    image,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    new BackgroundSize(100, 100, true, true, true, false)
+            );
+            this.setBackground(new Background(backgroundImage));
+        } else {
+            System.err.println("Image not found: " + imagePath);
+        }
     }
 
-
-    // GETTER SETTER
     public String getFlagName() {
         return flagName;
     }

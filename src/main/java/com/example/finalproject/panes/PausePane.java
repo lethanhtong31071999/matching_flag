@@ -5,6 +5,7 @@ import com.example.finalproject.MainApplication;
 import com.example.finalproject.SoundManager;
 import com.example.finalproject.components.Type;
 import com.example.finalproject.components.buttons.ButtonBase;
+import com.example.finalproject.scenes.IntroScene;
 import com.example.finalproject.scenes.PlayingScene;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -31,7 +32,7 @@ public class PausePane extends BorderPane {
 
         exitGame.setOnAction(e->{
             SoundManager.playButtonClickSound();
-            MainApplication.mainStage.setScene(Const.introScene);
+            MainApplication.mainStage.setScene(new IntroScene());
         });
 
         music.setOnAction(e -> {

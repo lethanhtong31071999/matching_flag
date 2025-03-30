@@ -1,7 +1,5 @@
 package com.example.finalproject.scenes;
 
-import com.example.finalproject.Const;
-import com.example.finalproject.panes.OverlayPane;
 import com.example.finalproject.panes.PlayingPane;
 
 import static com.example.finalproject.MainApplication.mainStage;
