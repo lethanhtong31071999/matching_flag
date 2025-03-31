@@ -4,6 +4,7 @@ import com.example.finalproject.Const;
 import com.example.finalproject.panes.PlayingPane;
 import com.example.finalproject.scenes.CreditScene;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.ColumnConstraints;
@@ -11,14 +12,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.util.Duration;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
+
 
 import static com.example.finalproject.MainApplication.mainStage;
 
@@ -149,21 +145,26 @@ public class FlagContainer extends GridPane{
             this.parent.writeScoreFile(currentScore);
         }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Game Over");
-        alert.setHeaderText("You WIN!!");
-        alert.setContentText("All pairs were found!");
-        alert.showAndWait();
-        mainStage.setScene(new CreditScene());
+
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Game Over");
+            alert.setHeaderText("You WIN!!");
+            alert.setContentText("All pairs were found!");
+            alert.close();
+            alert.showAndWait();
+            mainStage.setScene(new CreditScene());
+        });
     }
 
     private void alertSuccess(Flag flag) {
         if(flag == null) return;
         System.out.println("Match");
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(flag.getName().toUpperCase());
-        alert.setHeaderText("Congratulation!!");
+        alert.setHeaderText(flag.getName().toUpperCase());
+        alert.setTitle("Congratulation!!");
         alert.setContentText("This country is in" + flag.getContinent());
+//        alert.show();
     }
 
     private void alertFail(Flag flag) {
@@ -173,6 +174,8 @@ public class FlagContainer extends GridPane{
         alert.setTitle(flag.getName().toUpperCase());
         alert.setHeaderText("Ops!!");
         alert.setContentText("This country is in" + flag.getContinent());
+//        alert.show();
+
     }
 
     private Flag findFlagByName(FlagItem item) {
