@@ -15,6 +15,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public final class Const {
+    // file path
+    public static String SCORE_FILE = "scores.txt";
+
     // Clip logo
     public static int RADIUS_LOGO = 100;
 
@@ -63,21 +66,17 @@ public final class Const {
     public static Media media;
     public static boolean isMusicPlaying = true;
 
-    public static Media backgroundMedia;
-    public static MediaPlayer backgroundMediaPlayer;
-    public static boolean isBackgroundSoundOn = true;
-
 
     // Constant Panes
-    public static IntroPane introPane;
     public static PlayingPane playingPane;
     public static SettingPane settingPane;
     public static PausePane pausePane;
 
     // Constant Scenes
-    public static IntroScene introScene;
     public static PlayingScene playingScene;
     public static SettingScene settingScene;
     public static PauseScene pauseScene;
 
+    // Is Game playing
+    public static boolean WAS_PLAY = false;
 }

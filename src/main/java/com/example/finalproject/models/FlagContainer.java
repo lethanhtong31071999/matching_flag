@@ -1,6 +1,7 @@
 package com.example.finalproject.models;
 
 import com.example.finalproject.Const;
+import com.example.finalproject.panes.PlayingPane;
 import com.example.finalproject.scenes.CreditScene;
 import javafx.animation.PauseTransition;
 import javafx.scene.control.Alert;
@@ -9,9 +10,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 import static com.example.finalproject.MainApplication.mainStage;
 
@@ -38,8 +44,11 @@ public class FlagContainer extends GridPane{
     private final ArrayList<FlagItem> openedFlags = new ArrayList<>();
     private final int totalPairs;
     private int matchedPairs;
+    private PlayingPane parent;
+    private int currentScore = 0;
 
-    public FlagContainer(int size) {
+    public FlagContainer(int size, PlayingPane parent) {
+        this.parent = parent;
         //Collections.shuffle(flags);
         this.totalPairs = (size * size) / 2;
         this.setHgap(Const.CELL_GAP);
@@ -97,6 +106,7 @@ public class FlagContainer extends GridPane{
         boolean isMatch = first.getFlagName().equals(second.getFlagName());
 
         if (isMatch) {
+            currentScore++;
             first.setMatch(true);
             second.setMatch(true);
             first.setOpacity(0);
@@ -108,6 +118,9 @@ public class FlagContainer extends GridPane{
                 endGame();
             }
         } else {
+            if(currentScore > 0) {
+                currentScore--;
+            }
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(event -> {
                 first.reset();
@@ -117,12 +130,21 @@ public class FlagContainer extends GridPane{
             pause.play();
         }
 
+        this.parent.getScoreTxt().setText(currentScore + "");
+
         openedFlags.clear();
         return isMatch;
     }
 
     private void endGame() {
         System.out.println("End game");
+
+        // Save the best score
+        int highestScore = this.parent.readScoreFile();
+        if(highestScore < currentScore) {
+            this.parent.writeScoreFile(currentScore);
+        }
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText("You WIN!!");

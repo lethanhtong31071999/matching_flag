@@ -5,6 +5,7 @@ import com.example.finalproject.MainApplication;
 import com.example.finalproject.SoundManager;
 import com.example.finalproject.components.Type;
 import com.example.finalproject.components.buttons.ButtonBase;
+import com.example.finalproject.scenes.IntroScene;
 import javafx.geometry.Pos;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -18,7 +19,7 @@ public class SettingPane extends BorderPane {
         ButtonBase background = new ButtonBase("Background Sounds ON", Type.PRIMARY);
 
         back.setOnAction(e->{
-            MainApplication.mainStage.setScene(Const.introScene);
+            MainApplication.mainStage.setScene(new IntroScene());
             SoundManager.playButtonClickSound();
         });
 

@@ -51,10 +51,14 @@ public class IntroPane extends VBox {
         Font currentFont = btnContinue.getFont();
         btnContinue.setFont(Font.font(currentFont.getFamily(), FontWeight.BOLD, FontPosture.ITALIC, currentFont.getSize()));
         VBox.setMargin(btnContinue, new Insets(10, 0, 0, 0));
-        btnContinue.setOnAction(e->{
-            SoundManager.playButtonClickSound();
-            mainStage.setScene(Const.playingScene);
-        });
+        btnContinue.setOpacity(0);
+        if(Const.WAS_PLAY) {
+            btnContinue.setOpacity(1);
+            btnContinue.setOnAction(e->{
+                SoundManager.playButtonClickSound();
+                mainStage.setScene(Const.playingScene);
+            });
+        }
 
         // Scale continue
         ScaleTransition scaleContinueBtn = new ScaleTransition(Duration.seconds(1.5), btnContinue);
@@ -101,6 +105,7 @@ public class IntroPane extends VBox {
         btnNewGame.setOnAction(e -> {
             mainStage.setScene(new PlayingScene(new PlayingPane()));
             SoundManager.playButtonClickSound();
+            Const.WAS_PLAY = true;
         });
 
         this.setAlignment(Pos.BASELINE_CENTER);
