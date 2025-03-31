@@ -25,39 +25,54 @@ public class FlagItem extends Button {
         this.isOpening = false;
         this.isMatch = false;
         this.setOpacity(1);
+        this.setPrefSize(200, 100);
 
         this.setPrefSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.setBackgroundFlagItem(placeholderImgPath);
-        this.setOnAction(this::handleClick);
+        this.setOnAction(e -> this.handleClick(e));
     }
 
     private void handleClick(ActionEvent e) {
-        flagItemAnimation();
+        if(this.isOpening) return;
+
+        flagItemAnimation(true);
         this.isOpening = true;
         this.setBackgroundFlagItem(imagePath);
         parentContainer.handleFlagClick(this);
+        if(isMatch) {
+            this.setOpacity(0);
+        }
     }
 
-    private void flagItemAnimation() {
-        FadeTransition fade = new FadeTransition(Duration.millis(1000), this);
-        fade.setFromValue(1);
-        fade.setToValue(0);
-        fade.setCycleCount(2);
-        fade.setAutoReverse(true);
+    private void flagItemAnimation(boolean isHidden) {
+        FadeTransition fade = new FadeTransition(Duration.seconds(1.5), this);
+        if(isHidden) {
+            fade.setFromValue(1);
+            fade.setToValue(0);
+        } else {
+            fade.setFromValue(0);
+            fade.setToValue(1);
+        }
         fade.play();
+    }
+
+    public void setAfterMatch() {
+        this.isMatch = true;
+        this.setOpacity(0);
     }
 
     public void reset() {
         this.isOpening = false;
+        this.setOpacity(1);
         this.setBackgroundFlagItem(placeholderImgPath);
+        flagItemAnimation(false);
     }
 
     private void setBackgroundFlagItem(String imagePath) {
         InputStream stream = getClass().getResourceAsStream(imagePath);
         if (stream != null) {
-            Image image = new Image(stream);
             BackgroundImage backgroundImage = new BackgroundImage(
-                    image,
+                    new Image(stream),
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.CENTER,

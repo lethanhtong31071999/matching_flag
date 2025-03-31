@@ -110,21 +110,22 @@ public class FlagContainer extends GridPane{
 
         if (isMatch) {
             currentScore++;
-            first.setMatch(true);
-            second.setMatch(true);
-            first.setOpacity(0);
-            second.setOpacity(0);
             matchedPairs++;
-            System.out.println(matchedPairs + " - " + totalPairs);
-            if (matchedPairs == totalPairs) {
-                System.out.println("You win!");
-                endGame();
-            }
+            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+            pause.setOnFinished(event -> {
+                first.setAfterMatch();
+                second.setAfterMatch();
+                if (matchedPairs == totalPairs) {
+                    System.out.println("You win!");
+                    endGame();
+                }
+            });
+            pause.play();
         } else {
             if(currentScore > 0) {
                 currentScore--;
             }
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
             pause.setOnFinished(event -> {
                 first.reset();
                 second.reset();
