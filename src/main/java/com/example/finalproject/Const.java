@@ -4,7 +4,6 @@ import com.example.finalproject.panes.IntroPane;
 import com.example.finalproject.panes.PausePane;
 import com.example.finalproject.panes.PlayingPane;
 import com.example.finalproject.panes.SettingPane;
-import com.example.finalproject.scenes.IntroScene;
 import com.example.finalproject.scenes.PauseScene;
 import com.example.finalproject.scenes.PlayingScene;
 import com.example.finalproject.scenes.SettingScene;
@@ -15,6 +14,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public final class Const {
+    public static String LOGO = "/com/example/finalproject/logo.JPG";
     // file path
     public static String SCORE_FILE = "scores.txt";
 

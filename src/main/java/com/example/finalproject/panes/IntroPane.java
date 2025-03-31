@@ -7,20 +7,19 @@ import com.example.finalproject.components.buttons.ButtonBase;
 import com.example.finalproject.components.texts.HeadingText;
 import com.example.finalproject.scenes.CreditScene;
 import com.example.finalproject.scenes.PlayingScene;
-import com.example.finalproject.scenes.SettingScene;
 import javafx.animation.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
+
+import java.io.InputStream;
 
 import static com.example.finalproject.MainApplication.mainStage;
 
@@ -39,7 +38,8 @@ public class IntroPane extends VBox {
         Circle clip = new Circle(Const.RADIUS_LOGO);
         clip.setCenterX(Const.RADIUS_LOGO);
         clip.setCenterY(Const.RADIUS_LOGO);
-        ImageView logo = new ImageView(new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2bFjNad56DWlMApG5Sj0eRLVsTzRTSeZwYQ&s"));
+        InputStream stream = getClass().getResourceAsStream(Const.LOGO);
+        ImageView logo = new ImageView(new Image(stream));
         logo.setFitHeight(Const.RADIUS_LOGO * 2);
         logo.setFitWidth(Const.RADIUS_LOGO * 2);
         logo.setClip(clip);

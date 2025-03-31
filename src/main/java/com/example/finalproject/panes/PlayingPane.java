@@ -26,6 +26,7 @@ public class PlayingPane extends BorderPane {
         this.setTop(topRight);
         BorderPane.setAlignment(topRight, Pos.TOP_RIGHT);
 
+        // Moves
         TextField bestScore = new TextField();
         bestScore.setEditable(false);
         bestScore.setText(this.readScoreFile() + "");

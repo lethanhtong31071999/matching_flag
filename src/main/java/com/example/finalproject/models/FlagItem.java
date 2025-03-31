@@ -45,10 +45,11 @@ public class FlagItem extends Button {
     }
 
     private void flagItemAnimation(boolean isHidden) {
-        FadeTransition fade = new FadeTransition(Duration.seconds(1.5), this);
+        FadeTransition fade = new FadeTransition(Duration.seconds(0.5), this);
         if(isHidden) {
             fade.setFromValue(1);
             fade.setToValue(0);
+            fade.setAutoReverse(true);
         } else {
             fade.setFromValue(0);
             fade.setToValue(1);

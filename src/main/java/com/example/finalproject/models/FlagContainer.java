@@ -43,11 +43,11 @@ public class FlagContainer extends GridPane{
     private final int totalPairs;
     private int matchedPairs;
     private PlayingPane parent;
-    private int currentScore = 0;
+    private int currentMoves = 0;
 
     public FlagContainer(int size, PlayingPane parent) {
         this.parent = parent;
-        //Collections.shuffle(flags);
+//        Collections.shuffle(flags);
         this.totalPairs = (size * size) / 2;
         this.setHgap(Const.CELL_GAP);
         this.setVgap(Const.CELL_GAP);
@@ -81,6 +81,7 @@ public class FlagContainer extends GridPane{
             return;
         }
         openedFlags.add(item);
+        this.parent.getScoreTxt().setText(++currentMoves + "");
 
         if (openedFlags.size() == 2) {
             // Do this one if have time
@@ -105,9 +106,8 @@ public class FlagContainer extends GridPane{
         boolean isMatch = first.getFlagName().equals(second.getFlagName());
 
         if (isMatch) {
-            currentScore++;
             matchedPairs++;
-            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
             pause.setOnFinished(event -> {
                 first.setAfterMatch();
                 second.setAfterMatch();
@@ -118,10 +118,7 @@ public class FlagContainer extends GridPane{
             });
             pause.play();
         } else {
-            if(currentScore > 0) {
-                currentScore--;
-            }
-            PauseTransition pause = new PauseTransition(Duration.seconds(1.5));
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
             pause.setOnFinished(event -> {
                 first.reset();
                 second.reset();
@@ -129,8 +126,6 @@ public class FlagContainer extends GridPane{
             });
             pause.play();
         }
-
-        this.parent.getScoreTxt().setText(currentScore + "");
 
         openedFlags.clear();
         return isMatch;
@@ -140,9 +135,9 @@ public class FlagContainer extends GridPane{
         System.out.println("End game");
 
         // Save the best score
-        int highestScore = this.parent.readScoreFile();
-        if(highestScore < currentScore) {
-            this.parent.writeScoreFile(currentScore);
+        int theLowestMoves = this.parent.readScoreFile();
+        if(theLowestMoves > currentMoves) {
+            this.parent.writeScoreFile(currentMoves);
         }
 
 
