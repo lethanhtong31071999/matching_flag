@@ -4,6 +4,7 @@ import com.example.finalproject.Const;
 import com.example.finalproject.panes.PlayingPane;
 import com.example.finalproject.scenes.CreditScene;
 import javafx.animation.PauseTransition;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -23,24 +24,25 @@ import static com.example.finalproject.MainApplication.mainStage;
 
 public class FlagContainer extends GridPane{
     private ArrayList<Flag> flags = new ArrayList<>(Arrays.asList(
-            new Flag("Poland", "https://flagpedia.net/data/flags/w580/pl.png", "Europe"),
-            new Flag("Indonesia", "https://flagpedia.net/data/flags/w580/id.png", "Asia"),
-            new Flag("France", "https://flagpedia.net/data/flags/w580/fr.png", "Europe"),
-            new Flag("Denmark", "https://flagpedia.net/data/flags/w580/dk.png", "Europe"),
-            new Flag("Finland", "https://flagpedia.net/data/flags/w580/fi.png", "Europe"),
-            new Flag("Russia", "https://flagpedia.net/data/flags/w580/ru.png", "Europe and Asia"),
-            new Flag("Germany", "https://flagpedia.net/data/flags/w580/de.png", "Europe"),
-            new Flag("Vietnam", "https://flagpedia.net/data/flags/w580/vn.png", "Asia"),
+            new Flag("Poland", "/com/example/finalproject/Poland Flag.png", "Europe"),
+            new Flag("Indonesia", "/com/example/finalproject/Indonesia.png", "Asia"),
+            new Flag("France", "/com/example/finalproject/France Flag.png", "Europe"),
+            new Flag("Denmark", "/com/example/finalproject/Denmark Flag.png", "Europe"),
+            new Flag("Finland", "/com/example/finalproject/Finland Flag.png", "Europe"),
+            new Flag("Russia", "/com/example/finalproject/Russia Flag.png", "Europe and Asia"),
+            new Flag("Germany", "/com/example/finalproject/Germany Flag.png", "Europe"),
+            new Flag("Vietnam", "/com/example/finalproject/Vietnam Flag.png", "Asia"),
             // Loop
-            new Flag("Poland", "https://flagpedia.net/data/flags/w580/pl.png", "Europe"),
-            new Flag("Indonesia", "https://flagpedia.net/data/flags/w580/id.png", "Asia"),
-            new Flag("France", "https://flagpedia.net/data/flags/w580/fr.png", "Europe"),
-            new Flag("Denmark", "https://flagpedia.net/data/flags/w580/dk.png", "Europe"),
-            new Flag("Finland", "https://flagpedia.net/data/flags/w580/fi.png", "Europe"),
-            new Flag("Russia", "https://flagpedia.net/data/flags/w580/ru.png", "Europe and Asia"),
-            new Flag("Germany", "https://flagpedia.net/data/flags/w580/de.png", "Europe"),
-            new Flag("Vietnam", "https://flagpedia.net/data/flags/w580/vn.png", "Asia")
-        ));
+            new Flag("Poland", "/com/example/finalproject/Poland Flag.png", "Europe"),
+            new Flag("Indonesia", "/com/example/finalproject/Indonesia.png", "Asia"),
+            new Flag("France", "/com/example/finalproject/France Flag.png", "Europe"),
+            new Flag("Denmark", "/com/example/finalproject/Denmark Flag.png", "Europe"),
+            new Flag("Finland", "/com/example/finalproject/Finland Flag.png", "Europe"),
+            new Flag("Russia", "/com/example/finalproject/Russia Flag.png", "Europe and Asia"),
+            new Flag("Germany", "/com/example/finalproject/Germany Flag.png", "Europe"),
+            new Flag("Vietnam", "/com/example/finalproject/Vietnam Flag.png", "Asia")
+    ));
+
     private final ArrayList<FlagItem> openedFlags = new ArrayList<>();
     private final int totalPairs;
     private int matchedPairs;
@@ -53,6 +55,7 @@ public class FlagContainer extends GridPane{
         this.totalPairs = (size * size) / 2;
         this.setHgap(Const.CELL_GAP);
         this.setVgap(Const.CELL_GAP);
+        this.setAlignment(Pos.CENTER);
 
         // Set constraints (optional as we don't span rows or columns)
         for (int i = 0; i < size; i++) {
