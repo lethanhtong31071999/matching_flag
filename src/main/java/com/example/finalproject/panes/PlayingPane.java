@@ -81,10 +81,7 @@ public class PlayingPane extends BorderPane {
             String line = "";
             int score = 0;
             if((line = in.readLine()) != null) {
-                String[] scores = line.split("");
-                for (String temp : scores) {
-                    score = Integer.parseInt(temp);
-                }
+                score = Integer.parseInt(line.trim());
             } else {
                 return -1;
             }
