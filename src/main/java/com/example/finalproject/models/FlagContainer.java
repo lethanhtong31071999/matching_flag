@@ -3,6 +3,7 @@ package com.example.finalproject.models;
 import com.example.finalproject.Const;
 import com.example.finalproject.panes.PlayingPane;
 import com.example.finalproject.scenes.CreditScene;
+import com.example.finalproject.scenes.PlayingScene;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -150,6 +151,8 @@ public class FlagContainer extends GridPane{
             alert.setContentText("All pairs were found!");
             alert.close();
             alert.showAndWait();
+            Const.playingPane = new PlayingPane();
+            Const.playingScene = new PlayingScene(Const.playingPane);
             mainStage.setScene(new CreditScene());
         });
     }
