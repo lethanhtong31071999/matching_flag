@@ -15,6 +15,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 import static com.example.finalproject.MainApplication.mainStage;
@@ -48,7 +49,7 @@ public class FlagContainer extends GridPane{
 
     public FlagContainer(int size, PlayingPane parent) {
         this.parent = parent;
-//        Collections.shuffle(flags);
+        Collections.shuffle(flags);
         this.totalPairs = (size * size) / 2;
         this.setHgap(Const.CELL_GAP);
         this.setVgap(Const.CELL_GAP);
