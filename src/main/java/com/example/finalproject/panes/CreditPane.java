@@ -25,10 +25,10 @@ public class CreditPane extends VBox {
         HeadingText projectName = new HeadingText("Matching Flag Game!");
 
         // Sections with subtitles and names
-        HBox devBox = createCreditSection("Developers", "Lukas Lynch, Munashe, Thanh Tong Le");
-        HBox musicBox = createCreditSection("Music", "Lukas Lynch");
-        HBox imageBox = createCreditSection("Image Assets", "Munashe");
-        HBox designBox = createCreditSection("Game Design", "Thanh Tong Le");
+        HBox devBox = createCreditSection("Developers", "Lukas Lynch, Munashe Hokonya, Thanh Tong Le");
+        HBox musicBox = createCreditSection("Music", "Munashe Hokonya");
+        HBox imageBox = createCreditSection("Image Assets", "Munashe Hokonya, Thanh Tong Le");
+        HBox designBox = createCreditSection("Game Design", "Thanh Tong Le, Lukas Lynch");
 
         ButtonBase btnBack = new ButtonBase("Back to Home", Type.TEXT_BUTTON);
         btnBack.setOnAction(e -> {
