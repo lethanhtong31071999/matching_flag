@@ -136,9 +136,11 @@ public class FlagContainer extends GridPane{
 
         // Save the best score
         int theLowestMoves = this.parent.readScoreFile();
-        if(theLowestMoves > currentMoves) {
+        if(theLowestMoves == -1) {
             this.parent.writeScoreFile(currentMoves);
         }
+        else if(theLowestMoves > currentMoves)
+            this.parent.writeScoreFile(currentMoves);
 
 
         Platform.runLater(() -> {

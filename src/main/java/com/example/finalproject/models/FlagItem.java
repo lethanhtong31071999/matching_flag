@@ -49,7 +49,6 @@ public class FlagItem extends Button {
         if(isHidden) {
             fade.setFromValue(1);
             fade.setToValue(0);
-            fade.setAutoReverse(true);
         } else {
             fade.setFromValue(0);
             fade.setToValue(1);

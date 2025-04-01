@@ -5,6 +5,7 @@ import com.example.finalproject.components.Type;
 import com.example.finalproject.components.buttons.ButtonBase;
 import com.example.finalproject.models.FlagContainer;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import java.io.BufferedReader;
@@ -27,16 +28,32 @@ public class PlayingPane extends BorderPane {
         BorderPane.setAlignment(topRight, Pos.TOP_RIGHT);
 
         // Moves
+        Label lbBestScore = new Label("Best move");
+        Label lbCurrentScore = new Label("Current move");
+
         TextField bestScore = new TextField();
         bestScore.setEditable(false);
-        bestScore.setText(this.readScoreFile() + "");
+        int bestScoreFromIO = this.readScoreFile();
+        if(bestScoreFromIO == -1) {
+            bestScore.setText("");
+        }
+        else {
+            bestScore.setText(bestScoreFromIO + "");
+        }
 
         scoreTxt = new TextField();
         scoreTxt.setEditable(false);
-        VBox scoreContainer = new VBox(10);
-        scoreContainer.getChildren().addAll(scoreTxt, bestScore);
-        this.setBottom(scoreContainer);
-        BorderPane.setAlignment(scoreTxt, Pos.BOTTOM_CENTER);
+        HBox bestMoveContainer = new HBox(10);
+        bestMoveContainer.getChildren().addAll(lbBestScore, bestScore);
+        HBox currentMoveContainer = new HBox(10);
+        currentMoveContainer.getChildren().addAll(lbCurrentScore, scoreTxt);
+
+        VBox sidebarContainer = new VBox(10);
+        sidebarContainer.getChildren().addAll(pauseButton, bestMoveContainer, currentMoveContainer);
+
+
+        this.setRight(sidebarContainer);
+        BorderPane.setAlignment(sidebarContainer, Pos.TOP_LEFT);
 
         pauseButton.setOnAction(e->{
             SoundManager.playButtonClickSound();
@@ -69,7 +86,7 @@ public class PlayingPane extends BorderPane {
                     score = Integer.parseInt(temp);
                 }
             } else {
-                return 0;
+                return -1;
             }
             return score;
         } catch (Exception e) {
