@@ -92,11 +92,6 @@ public class IntroPane extends VBox {
             SoundManager.playButtonClickSound();
         });
 
-        // History
-        ButtonBase btnHistory = new ButtonBase("History", Type.TEXT_BUTTON);
-        btnHistory.setOpacity(0);
-        VBox.setMargin(btnHistory, new Insets(10, 0, 0, 0));
-
         // Play Button
         ButtonBase btnNewGame = new ButtonBase("New Game", Type.PRIMARY);
         btnNewGame.setTranslateY(200);
@@ -109,7 +104,7 @@ public class IntroPane extends VBox {
         });
 
         this.setAlignment(Pos.BASELINE_CENTER);
-        this.getChildren().addAll(title, logo, btnContinue, btnSetting, btnCredit, btnHistory, btnNewGame);
+        this.getChildren().addAll(title, logo, btnContinue, btnSetting, btnCredit, btnNewGame);
 
         /* ======== END UI ======== */
 
@@ -144,10 +139,6 @@ public class IntroPane extends VBox {
         fadeCredit.setToValue(1);
         fadeCredit.setFromValue(0);
 
-        FadeTransition fadeHistory = new FadeTransition(Duration.seconds(1), btnHistory);
-        fadeHistory.setToValue(1);
-        fadeHistory.setFromValue(0);
-
         // Transition Y New game Button + Fade (Parallel)
         TranslateTransition slideButton = new TranslateTransition(Duration.seconds(1.5), btnNewGame);
         slideButton.setToY(100);
@@ -158,7 +149,7 @@ public class IntroPane extends VBox {
 
         // Others Transition X (Sequential)
         SequentialTransition sequentialSettingCreditHistory = new SequentialTransition(
-                fadeSetting, fadeCredit, fadeHistory);
+                fadeSetting, fadeCredit);
 
         // Sequential Transition: Other + New game button
         SequentialTransition sequentialTransition = new SequentialTransition(
